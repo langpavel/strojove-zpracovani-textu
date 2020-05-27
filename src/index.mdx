@@ -1,23 +1,28 @@
 import { book, highlight } from '@mdx-deck/themes';
+import { Time } from './components/Time';
 
 export const theme = { ...book, ...highlight };
 
-# Obsah — Zpracování textu
+# Workshop &bullet; Strojové zpracování _textu_
 
-- Kódování znaků (bitová reprezentace)
+## _o čem to asi bude_
+
+- lehký úvod, nicméně nezbytný: Kódování znaků (bitová reprezentace) (<Time minutes={3} />)
   - s pevnou bitovou šířkou znaku
   - s variabilní bitovou šířkou znaku
-- normalizace
-  - uspořádání (`<`), řazení (collation)
-  - ekvivalence (`==`),
+- uspořádání (`<`); řazení, `Collator` (<Time minutes={5} />)
+- normalizace &times; Unicode (<Time minutes={'7–13'} />)
 - hledání, podobnost
   - bitová shoda
-  - vzor (like, ilike), regulární výraz
+  - vzor (like, ilike)
   - sound like, n-gramy, trigramy
+- regulární výrazy
+- lexikální a gramatická analýza
+- statistika, AI
 
 ---
 
-# [Kódování](https://cs.wikipedia.org/wiki/K%C3%B3dov%C3%A1n%C3%AD_znak%C5%AF) s pevnou bitovou šířkou znaku
+## [Kódování](https://cs.wikipedia.org/wiki/K%C3%B3dov%C3%A1n%C3%AD_znak%C5%AF) s pevnou bitovou šířkou znaku
 
 - [ASCII](https://cs.wikipedia.org/wiki/ASCII)
 
@@ -34,40 +39,88 @@ export const theme = { ...book, ...highlight };
 
 ---
 
-# Unicode normalizace
+# Collation (implementuje uspořádání `<`)
 
-## NFD
+## PostgreSQL
 
-Normalization Form Canonical Decomposition Characters are decomposed by canonical equivalence, and multiple combining characters are arranged in a specific order.
+- super rychlé `COLLATE "C"` (nebo `COLLATE "POSIX"`, ale nemíchat)
+- `COLLATE "C.UTF-8"` je [úplně něco jiného](https://dba.stackexchange.com/questions/240930/postgresql-difference-between-collations-c-and-c-utf-8)
+- `COLLATE "cs_CZ.UTF-8"`
+- indexování
 
-## NFC
+## JavaScript
 
-Normalization Form Canonical Composition Characters are decomposed and then recomposed by canonical equivalence.
+- [Intl.Collator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator)
 
-## NFKD
+## PHP
 
-Normalization Form Compatibility Decomposition Characters are decomposed by compatibility, and multiple combining characters are arranged in a specific order.
-
-## NFKC
-
-Normalization Form Compatibility Composition Characters are decomposed by compatibility, then recomposed by canonical equivalence.
-
----
-
-# Regulární výrazy
-
-Nástroj <a href="https://regex101.com/" target="_blank">regex101.com</a>
+- The [Collator](https://www.php.net/manual/en/class.collator.php) class
 
 ---
 
-```ts
-/[]/;
-```
+# Unicode normalizace — [`"…".normalize()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize)
+
+### NFD (Normalization Form Canonical Decomposition Characters)
+
+decomposed by canonical equivalence, and multiple combining characters are arranged in a specific order.
+
+### NFC (Normalization Form Canonical Composition Characters)
+
+decomposed and then recomposed by canonical equivalence.
+
+### NFKD (Normalization Form Compatibility Decomposition Characters)
+
+decomposed by compatibility, and multiple combining characters are arranged in a specific order.
+
+### NFKC (Normalization Form Compatibility Composition Characters)
+
+decomposed by compatibility, then recomposed by canonical equivalence.
 
 ---
 
-## This is my deck
+# Regulární výrazy (tool [regex101](https://regex101.com/))
+
+## primitiva
+
+- `/abcd/` je "abc", kdekoliv
+- `/^abcd/` je od začátku stringu nebo řádku, záleží…
+- `/abcd$/` je na konci stringu nebo řádku, záleží…
+
+## prvek z množiny
+
+Jeden znak reprezentuje sám sebe, ale obžas je potřeba zjistit, zda je to číslo, nebo malý znak od c-g:
+
+- `/[0-9]/`
+- `/[c-g]/`
+
+## kvantifikátory
+
+- `/bleh.+blah/` co je mezi? (1–&infin;)
+- `/bleh.*blah/` co je mezi? (0–&infin;)
+- `/bleh.{21,27}blah/` co je mezi a musí býtod do? _n…m_? (21–27)
+- `/bleh(.{21,27})blah/` co je mezi a musí býtod do? _n…m_? (21–27) chci to vědět!
+
+## ..
+
+- escape `\`
+- character class `[…]`
+- group `(…)`
+
+##
 
 ---
 
-## Diskuze
+# Parsery (LR, LALR, GLR, …, PEG)
+
+- lex + yacc (historie)
+- flex + bison
+- gold parser → LALR tabulky
+- PEG.js
+
+---
+
+# Už je _úvod_ u konce :-)
+
+Tak si budem hrát a diskutovat ;-)
+
+## PEG.js
