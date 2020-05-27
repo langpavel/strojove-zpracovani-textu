@@ -1,0 +1,16 @@
+{
+  "name": "@tmapy/strojove-zpracovani-textu",
+  "version": "0.0.1",
+  "description": "Prezentace: Strojové zpracování textu",
+  "main": "index.js",
+  "repository": "git@durin.hk.tmapy.cz:pala/strojove-zpracovani-textu.git",
+  "author": "pala <pala@tmapy.cz>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "mdx-deck": "^4.1.1"
+  },
+  "scripts": {
+    "start": "mdx-deck src/index.mdx"
+  }
+}

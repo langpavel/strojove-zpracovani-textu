@@ -1,0 +1,73 @@
+import { book, highlight } from '@mdx-deck/themes';
+
+export const theme = { ...book, ...highlight };
+
+# Obsah — Zpracování textu
+
+- Kódování znaků (bitová reprezentace)
+  - s pevnou bitovou šířkou znaku
+  - s variabilní bitovou šířkou znaku
+- normalizace
+  - uspořádání (`<`), řazení (collation)
+  - ekvivalence (`==`),
+- hledání, podobnost
+  - bitová shoda
+  - vzor (like, ilike), regulární výraz
+  - sound like, n-gramy, trigramy
+
+---
+
+# [Kódování](https://cs.wikipedia.org/wiki/K%C3%B3dov%C3%A1n%C3%AD_znak%C5%AF) s pevnou bitovou šířkou znaku
+
+- [ASCII](https://cs.wikipedia.org/wiki/ASCII)
+
+#### [Kódování češtiny](https://cs.wikipedia.org/wiki/K%C3%B3dov%C3%A1n%C3%AD_%C4%8De%C5%A1tiny)
+
+- [KOI8-CS](https://cs.wikipedia.org/wiki/KOI#KOI8-CS) (ČSN 36 9103)
+- [CP852](https://cs.wikipedia.org/wiki/CP852), IBM 852, OEM 852, PC Latin 2, IBM Latin 2
+- [ISO 8859-2](https://cs.wikipedia.org/wiki/ISO_8859-2), Latin 2
+- [Windows-1250](https://cs.wikipedia.org/wiki/Windows-1250) (CP-1250)
+
+## Kódování s variabilní bitovou šířkou znaku
+
+- [Unicode](https://cs.wikipedia.org/wiki/Unicode), UTF-8
+
+---
+
+# Unicode normalizace
+
+## NFD
+
+Normalization Form Canonical Decomposition Characters are decomposed by canonical equivalence, and multiple combining characters are arranged in a specific order.
+
+## NFC
+
+Normalization Form Canonical Composition Characters are decomposed and then recomposed by canonical equivalence.
+
+## NFKD
+
+Normalization Form Compatibility Decomposition Characters are decomposed by compatibility, and multiple combining characters are arranged in a specific order.
+
+## NFKC
+
+Normalization Form Compatibility Composition Characters are decomposed by compatibility, then recomposed by canonical equivalence.
+
+---
+
+# Regulární výrazy
+
+Nástroj <a href="https://regex101.com/" target="_blank">regex101.com</a>
+
+---
+
+```ts
+/[]/;
+```
+
+---
+
+## This is my deck
+
+---
+
+## Diskuze
